@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~/portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d12;
+  --surface:#12151c;
+  --surface-2:#171b24;
+  --line:#242a36;
+  --text:#e6e8ee;
+  --muted:#8b93a7;
+  --accent:#5eead4;
+  --accent-2:#fb7185;
+  --accent-dim:#5eead422;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:radial-gradient(circle at 1px 1px, #ffffff08 1px, transparent 0);
+  background-size:28px 28px;
+  pointer-events:none;
+  z-index:0;
+}
+::selection{background:var(--accent);color:#0b0d12;}
+a{color:inherit;text-decoration:none;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+/* nav */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:#0b0d12cc;backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
+.brand{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;}
+.brand .accent{color:var(--accent);}
+.navlinks{display:flex;gap:28px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);}
+.navlinks a{transition:color .2s;}
+.navlinks a:hover{color:var(--accent);}
+
+/* hero / terminal */
+.hero{padding:90px 0 60px;}
+.term{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 30px 60px -30px #000a;
+}
+.term-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+}
+.dot{width:10px;height:10px;border-radius:50%;}
+.dot.r{background:#fb7185;}
+.dot.y{background:#fbbf24;}
+.dot.g{background:#5eead4;}
+.term-title{margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
+.term-body{padding:26px 24px 30px;font-family:'IBM Plex Mono',monospace;font-size:14px;}
+.term-body .ln{color:var(--muted);display:inline-block;width:20px;user-select:none;}
+.term-line{white-space:pre-wrap;}
+.term-body .path{color:var(--accent);}
+.term-body .cmd{color:var(--text);}
+.term-out{color:var(--muted);margin:2px 0 14px 20px;}
+.roles{color:var(--text);}
+.role-highlight{color:var(--accent-2);font-weight:600;}
+.cursor{display:inline-block;width:8px;height:16px;background:var(--accent);vertical-align:text-bottom;animation:blink 1s steps(1) infinite;margin-left:2px;}
+@keyframes blink{50%{opacity:0;}}
+
+.tagline{margin-top:26px;max-width:560px;color:var(--muted);font-size:15px;}
+.hero h1{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;}
+
+/* widgets row */
+.widgets{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px;}
+@media(max-width:640px){.widgets{grid-template-columns:1fr;}}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;display:flex;gap:14px;align-items:center;
+  transition:border-color .2s, transform .2s;
+}
+.card:hover{border-color:#5eead455;transform:translateY(-2px);}
+.card .avatar{
+  width:52px;height:52px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;color:#0b0d12;font-size:18px;
+}
+.avatar svg{
+    width:24px;
+    height:24px;
+    display:block;
+    color:#0b0d12;
+}
+
+.card .info{flex:1;min-width:0;}
+.card .info .name{font-weight:600;font-size:14px;}
+.card .info .sub{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.status-dot{width:9px;height:9px;border-radius:50%;background:#3ba55d;display:inline-block;margin-right:6px;}
+.card .go{color:var(--muted);font-size:12px;font-family:'IBM Plex Mono',monospace;}
+.card:hover .go{color:var(--accent);}
+
+/* section shell */
+section{padding:70px 0;position:relative;}
+.section-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;
+}
+.section-tag::before{content:"//";color:var(--muted);}
+h2.section-title{font-size:28px;font-weight:800;margin-bottom:34px;}
+
+/* projects as file listing */
+.filelist{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface);}
+.file-row{
+  display:grid;grid-template-columns:26px 1fr auto;gap:14px;align-items:center;
+  padding:16px 18px;border-bottom:1px solid var(--line);
+  transition:background .2s;
+}
+.file-row:last-child{border-bottom:none;}
+.file-row:hover{background:var(--surface-2);}
+.file-icon{font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:15px;}
+.file-main .fname{font-weight:600;font-size:15px;}
+.file-main .fdesc{font-size:13px;color:var(--muted);margin-top:3px;}
+.ftag{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  border:1px solid var(--line);padding:4px 9px;border-radius:20px;white-space:nowrap;
+}
+.ftag.lua{color:#5eead4;border-color:#5eead455;}
+.ftag.web{color:#fb7185;border-color:#fb718555;}
+.ftag.gfx{color:#fbbf24;border-color:#fbbf2455;}
+
+/* commissions */
+.comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:760px){.comm-grid{grid-template-columns:1fr;}}
+.comm-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;
+}
+.comm-card .num{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:12px;margin-bottom:10px;}
+.comm-card h3{font-size:17px;margin-bottom:8px;}
+.comm-card p{font-size:13.5px;color:var(--muted);margin-bottom:14px;}
+.comm-card .price{font-family:'IBM Plex Mono',monospace;color:var(--accent);font-weight:600;font-size:14px;}
+
+/* contact */
+.contact-box{
+  border:1px dashed var(--line);border-radius:var(--radius);padding:36px;text-align:center;
+  background:linear-gradient(180deg,var(--surface),var(--surface-2));
+}
+.contact-box .prompt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13px;margin-bottom:14px;}
+.contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+.btn{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;padding:10px 18px;border-radius:8px;
+  border:1px solid var(--line);transition:all .2s;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.primary{background:var(--accent);color:#0b0d12;border-color:var(--accent);font-weight:600;}
+.btn.primary:hover{opacity:.85;color:#0b0d12;}
+
+footer{padding:30px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;font-family:'IBM Plex Mono',monospace;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">~/<span class="accent">dev</span></div>
+    <div class="navlinks">
+      <a href="#projects">projects</a>
+      <a href="#commissions">commissions</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>hello, i'm</h1>
+    <div class="term">
+      <div class="term-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="term-title">whoami.sh</div>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="path mono">guest@dev</span><span class="mono">:~$</span> <span class="cmd">whoami</span></div>
+        <div class="term-out">root — a full-stack developer / gfx designer working on Roblox & Web</div>
+        <div class="term-line"><span class="path mono">guest@dev</span><span class="mono">:~$</span> <span class="cmd">cat roles.txt</span></div>
+        <div class="term-out roles">
+          - <span class="role-highlight">Roblox Scripter</span> (Luau, system design, anti-cheat, game mechanics)<br>
+          - <span class="role-highlight">Website Scripter</span> (frontend/backend, bots, panels & dashboards)<br>
+          - <span class="role-highlight">GFX Designer</span> (thumbnails, logos, banners, UI graphics)
+        </div>
+        <div class="term-line"><span class="path mono">guest@dev</span><span class="mono">:~$</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+
+    <p class="tagline">I write scripts for Roblox games and web projects, and design gfx for brands and communities. Below you'll find my projects, commission info, and ways to reach me.</p>
+
+    <div class="widgets">
+      <a class="card" href="#" target="_blank" id="discordCard">
+<div class="avatar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.317 4.369A19.791 19.791 0 0 0 15.404 3c-.211.375-.444.87-.608 1.258a18.27 18.27 0 0 0-5.592 0A12.64 12.64 0 0 0 8.596 3a19.736 19.736 0 0 0-4.915 1.37C.533 9.018-.32 13.53.099 17.98a19.9 19.9 0 0 0 6.03 3.02c.487-.663.92-1.364 1.296-2.097-.71-.27-1.387-.606-2.023-.998.17-.125.336-.255.496-.39 3.903 1.836 8.137 1.836 11.993 0 .162.135.328.265.496.39-.637.393-1.315.73-2.026.999.377.732.81 1.433 1.297 2.096a19.87 19.87 0 0 0 6.032-3.02c.49-5.161-.838-9.632-3.38-13.611z"/>
+    </svg>
+</div>        <div class="info">
+          <div class="name"><span class="status-dot"></span>Discord</div>
+          <div class="sub" id="discordSub">@username — view profile</div>
+        </div>
+        <div class="go">↗</div>
+      </a>
+
+      <a class="card" href="https://www.roblox.com/users/0/profile" target="_blank" id="robloxCard">
+<div class="avatar">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" aria-hidden="true">
+        <path fill="currentColor" d="M168.7 0 0 71.3l71.3 168.7L240 168.7Zm-31.2 140.6-38.1 16.1-16.1-38.1 38.1-16.1Z"/>
+    </svg>
+</div>   <div class="info">
+          <div class="name">Roblox</div>
+          <div class="sub" id="robloxSub">@RobloxUsername — view profile</div>
+        </div>
+        <div class="go">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-tag">projects</div>
+    <h2 class="section-title">Projects I've Worked On</h2>
+    <div class="filelist">
+      <div class="file-row">
+        <div class="file-icon">▸</div>
+        <div class="file-main">
+          <div class="fname">myarmy.rbxl</div>
+          <div class="fdesc">Full server-client architecture and other systems for a military-themed Roblox game</div>
+        </div>
+        <div class="ftag lua">Luau</div>
+      </div>
+      <div class="file-row">
+        <div class="file-icon">▸</div>
+        <div class="file-main">
+          <div class="fname">anti-exploit.lua</div>
+          <div class="fdesc">Exploit / cheat detection and prevention system for Roblox games</div>
+        </div>
+        <div class="ftag lua">Luau</div>
+      </div>
+      <div class="file-row">
+        <div class="file-icon">▸</div>
+        <div class="file-main">
+          <div class="fname">discord-dashboard</div>
+          <div class="fdesc">Web panel for a Discord bot — server management, logging and moderation tools</div>
+        </div>
+        <div class="ftag web">Web</div>
+      </div>
+      <div class="file-row">
+        <div class="file-icon">▸</div>
+        <div class="file-main">
+          <div class="fname">thumbnail-pack-01</div>
+          <div class="fdesc">Roblox game thumbnail set — 3D render + composition</div>
+        </div>
+        <div class="ftag gfx">GFX</div>
+      </div>
+      <div class="file-row">
+        <div class="file-icon">▸</div>
+        <div class="file-main">
+          <div class="fname">pfp-logo</div>
+          <div class="fdesc">Profile picture set - 3D render</div>
+        </div>
+        <div class="ftag gfx">GFX</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="commissions">
+  <div class="wrap">
+    <div class="section-tag">commissions</div>
+    <h2 class="section-title">Services</h2>
+    <div class="comm-grid">
+      <div class="comm-card">
+        <div class="num mono">01</div>
+        <h3>Roblox Script</h3>
+        <p>Game mechanics, systems, anti-cheat, DataStore integration, and more.</p>
+        <div class="price">Price: $15</div>
+      </div>
+      <div class="comm-card">
+        <div class="num mono">02</div>
+        <h3>Website Script</h3>
+        <p>Discord bots, panels/dashboards, frontend & backend development.</p>
+        <div class="price">Price: $30</div>
+      </div>
+      <div class="comm-card">
+        <div class="num mono">03</div>
+        <h3>GFX Design</h3>
+        <p>Thumbnails, logos, banners, UI/UX graphics.</p>
+        <div class="price">Price: $5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-tag">contact</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-box">
+      <div class="prompt mono">$ send message --to dev</div>
+      <p>You can reach out via Discord for projects or commissions.</p>
+      <div class="contact-links">
+        <a class="btn primary" href="#" target="_blank">Message on Discord</a>
+        <a class="btn" href="#" target="_blank">Roblox Profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> — build with terminal energy</div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// The cards use static data (no live presence fetching).
+// Replace the values below with your own info before using.
+const DISCORD_USERNAME = "username";
+const DISCORD_USER_ID  = "000000000000000000";
+const ROBLOX_USERNAME  = "RobloxUsername";
+const ROBLOX_USER_ID   = "000000000";
+
+document.getElementById('discordSub').textContent = "@" + DISCORD_USERNAME + " — view profile";
+document.getElementById('discordCard').href = "https://discord.com/users/" + DISCORD_USER_ID;
+
+document.getElementById('robloxSub').textContent = "@" + ROBLOX_USERNAME + " — view profile";
+document.getElementById('robloxCard').href = "https://www.roblox.com/users/" + ROBLOX_USER_ID + "/profile";
+</script>
+
+</body>
+</html>
